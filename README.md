@@ -1,62 +1,65 @@
-# Atendimento-Cliente-Atividade-Pratica
+# Sistema de Atendimento ao Cliente
 
-Resumo
-- Projeto didático em Java que implementa estruturas de dados lineares simples (fila e pilha) para modelar um sistema de atendimento ao cliente.
-- Contém implementações próprias de Node, Fila (queue) e Pilha (stack) e classes de domínio Cliente e Solicitacao.
-- Arquivo de execução principal: [`SistemaAtendimento`](src/SistemaAtendimento.java).
+Este é um projeto didático em Java que implementa estruturas de dados lineares (fila e pilha) para simular um sistema de atendimento ao cliente. O projeto contém implementações próprias das estruturas básicas e classes de domínio para representar clientes e solicitações.
 
-Estrutura do repositório
-- [src/Cliente.java](src/Cliente.java)
-- [src/Solicitacao.java](src/Solicitacao.java)
-- [src/Node.java](src/Node.java)
-- [src/Fila.java](src/Fila.java)
-- [src/Pilha.java](src/Pilha.java)
-- [src/SistemaAtendimento.java](src/SistemaAtendimento.java)
-- [AtendimentoCliente.iml](AtendimentoCliente.iml)
-- [README.md](README.md)
+## Sobre o Projeto
 
-Descrição dos arquivos e classes principais
-- [`Cliente`](src/Cliente.java) — classe simples que modela um cliente com os campos:
-  - [`Cliente.nome`](src/Cliente.java)
-  - [`Cliente.numeroIdentificacao`](src/Cliente.java)
-  - [`Cliente.motivoAtendimento`](src/Cliente.java)
-  - Construtor: `new Cliente(String nome, String numeroIdentificacao, String motivoAtendimento)`
+O sistema modela dois componentes principais:
+- **Fila de atendimento**: Gerencia clientes em ordem de chegada (FIFO - First In, First Out)
+- **Histórico de solicitações**: Armazena solicitações em ordem reversa (LIFO - Last In, First Out)
 
-- [`Solicitacao`](src/Solicitacao.java) — classe que representa uma solicitação registrada no histórico:
-  - [`Solicitacao.id`](src/Solicitacao.java)
-  - [`Solicitacao.descricao`](src/Solicitacao.java)
-  - [`Solicitacao.dataHora`](src/Solicitacao.java)
-  - Construtor: `new Solicitacao(String id, String descricao, String dataHora)`
+## Estrutura do Projeto
 
-- [`Node`](src/Node.java) — nó genérico usado para construir listas encadeadas tanto para fila quanto para pilha:
-  - Campos: `Solicitacao solicitacao`, `Cliente cliente`, `Node proximo`
-  - Construtores: `Node(Solicitacao)` e `Node(Cliente)`
+### Arquivos Principais
 
-- [`Fila`](src/Fila.java) — implementação de fila (FIFO) com ponteiros `frente` e `tras`:
-  - [`Fila.enfileirar`](src/Fila.java) — adiciona um `Cliente` ao final.
-  - [`Fila.atender`](src/Fila.java) — remove e retorna o cliente da frente; atualiza `tras` quando fila fica vazia.
-  - [`Fila.estaVazia`](src/Fila.java) — verifica se `frente == null`.
-  - [`Fila.verProximo`](src/Fila.java) — retorna o cliente da frente sem remover.
-  - [`Fila.exibirFila`](src/Fila.java) — percorre a fila e imprime informações de cada cliente.
-  - Uso: a fila modela a sequência de atendimento.
+- **`Cliente.java`** - Representa um cliente com:
+  - `nome`, `numeroIdentificacao`, `motivoAtendimento`
+  - Construtor: `Cliente(String nome, String numeroIdentificacao, String motivoAtendimento)`
 
-- [`Pilha`](src/Pilha.java) — implementação de pilha (LIFO) com ponteiro `topo`:
-  - [`Pilha.empilhar`](src/Pilha.java) — insere uma `Solicitacao` no topo (usa `Node(Solicitacao)`).
-  - [`Pilha.desempilhar`](src/Pilha.java) — remove e retorna a solicitacao do topo.
-  - [`Pilha.estaVazia`](src/Pilha.java) — verifica se `topo == null`.
-  - [`Pilha.verTopo`](src/Pilha.java) — mostra a solicitacao no topo sem remover.
-  - [`Pilha.exibirHistorico`](src/Pilha.java) — percorre a pilha do `topo` para baixo e imprime cada solicitação.
-  - Uso: a pilha modela um histórico de solicitações onde a última solicitacao inserida é a primeira a ser removida.
+- **`Solicitacao.java`** - Representa uma solicitação no histórico:
+  - `id`, `descricao`, `dataHora`
+  - Construtor: `Solicitacao(String id, String descricao, String dataHora)`
 
-- [`SistemaAtendimento`](src/SistemaAtendimento.java) — classe com o método `main` que demonstra o sistema:
-  - Cria `Pilha historicoSolicitacoes` e `Fila filaAtendimento`.
-  - Popula a pilha com 10 objetos [`Solicitacao`](src/Solicitacao.java) usando `Pilha.empilhar`.
-  - Popula a fila com 10 objetos [`Cliente`](src/Cliente.java) usando `Fila.enfileirar`.
-  - Exibe estado inicial (chama `exibirHistorico` e `exibirFila`).
-  - Atende 3 clientes (chama `filaAtendimento.atender()` em loop) e imprime atendimento.
-  - Desempilha 3 solicitações (chama `historicoSolicitacoes.desempilhar()` em loop) e imprime remoções.
-  - Adiciona mais entradas e exibe novamente.
+- **`Node.java`** - Nó genérico para construir listas encadeadas
+- **`Fila.java`** - Implementação de fila (FIFO) para gerenciar clientes
+- **`Pilha.java`** - Implementação de pilha (LIFO) para histórico de solicitações
+- **`SistemaAtendimento.java`** - Classe principal com método `main` para demonstração
 
-Como executar:
+### Funcionalidades da Fila
 
-- Abra o projeto no IntelliJ IDEA e execute o `main` [`SistemaAtendimento`](src/SistemaAtendimento.java)
+- `enfileirar()` - Adiciona cliente ao final da fila
+- `atender()` - Remove e retorna o próximo cliente
+- `verProximo()` - Mostra o próximo cliente sem remover
+- `exibirFila()` - Lista todos os clientes na fila
+- `estaVazia()` - Verifica se a fila está vazia
+
+### Funcionalidades da Pilha
+
+- `empilhar()` - Adiciona solicitação ao topo
+- `desempilhar()` - Remove e retorna a solicitação do topo
+- `verTopo()` - Mostra a solicitação do topo sem remover
+- `exibirHistorico()` - Lista todo o histórico
+- `estaVazia()` - Verifica se a pilha está vazia
+
+## Como Executar
+
+1. Abra o projeto no IntelliJ IDEA
+2. Execute o arquivo `SistemaAtendimento.java`
+3. O programa demonstrará automaticamente:
+   - Criação de fila e pilha com 10 elementos cada
+   - Exibição do estado inicial
+   - Atendimento de 3 clientes
+   - Remoção de 3 solicitações do histórico
+   - Adição de novas entradas
+   - Exibição do estado final
+
+## Objetivo Educacional
+
+Este projeto tem como objetivo praticar conceitos fundamentais de programação:
+- Estruturas de dados lineares
+- Listas encadeadas
+- Manipulação de ponteiros
+- Encapsulamento e orientação a objetos
+- Desenvolvimento de algoritmos básicos
+
+O código é totalmente didático e implementa manualmente estruturas que normalmente seriam fornecidas pela biblioteca padrão do Java.
