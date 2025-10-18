@@ -23,7 +23,7 @@ class Fila {
     }
 
     // Rremove da frente
-    public Cliente atender(){
+    public Cliente atender() {
         if (!estaVazia()) {
             Cliente clienteAtendido = frente.cliente;
             frente = frente.proximo;
@@ -45,13 +45,12 @@ class Fila {
     }
 
     // Visualiza proximo cliente sem remover
-    public Cliente verProximo(){
-        if (!estaVazia())
-            return frente.cliente;
+    public Cliente verProximo() {
+        if (!estaVazia()) return frente.cliente;
 
         System.out.println("Fila vazia");
         return null;
-        
+
     }
 
     // Exibir todos os clientes na fila
@@ -72,10 +71,8 @@ class Fila {
             }
 
             System.out.println("============================\n");
-        }
-        else {
+        } else {
             System.out.println("Fila vazia");
         }
-        
     }
 }

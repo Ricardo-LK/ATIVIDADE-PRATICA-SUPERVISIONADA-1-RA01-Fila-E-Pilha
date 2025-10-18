@@ -32,8 +32,7 @@ class Pilha {
 
     // Visualiza topo da pilha sem remover
     public Solicitacao verTopo() {
-        if (!estaVazia())
-            return topo.solicitacao;
+        if (!estaVazia()) return topo.solicitacao;
 
         System.out.println("Pilha vazia");
         return null;
@@ -58,8 +57,7 @@ class Pilha {
             }
             System.out.println("=================================\n");
 
-        }
-        else {
+        } else {
             System.out.println("Historico vazio");
         }
     }
