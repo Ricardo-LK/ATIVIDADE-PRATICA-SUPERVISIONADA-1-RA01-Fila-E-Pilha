@@ -1,65 +1,197 @@
-# Sistema de Atendimento ao Cliente
+# Sistema de Gerenciamento de Atendimento ao Cliente
 
-Este é um projeto didático em Java que implementa estruturas de dados lineares (fila e pilha) para simular um sistema de atendimento ao cliente. O projeto contém implementações próprias das estruturas básicas e classes de domínio para representar clientes e solicitações.
+## Descrição do Projeto
 
-## Sobre o Projeto
+Este projeto implementa um sistema completo de gerenciamento de atendimento ao cliente utilizando estruturas de dados personalizadas. O sistema emprega uma **pilha** para gerenciar o histórico de solicitações de serviço e uma **fila** para controlar a ordem de atendimento dos clientes, ambas implementadas através de listas encadeadas.
 
-O sistema modela dois componentes principais:
-- **Fila de atendimento**: Gerencia clientes em ordem de chegada (FIFO - First In, First Out)
-- **Histórico de solicitações**: Armazena solicitações em ordem reversa (LIFO - Last In, First Out)
+## Estrutura do Sistema
 
-## Estrutura do Projeto
+### 1. Classe `Cliente`
 
-### Arquivos Principais
+Representa um cliente aguardando atendimento na fila.
 
-- **`Cliente.java`** - Representa um cliente com:
-  - `nome`, `numeroIdentificacao`, `motivoAtendimento`
-  - Construtor: `Cliente(String nome, String numeroIdentificacao, String motivoAtendimento)`
+**Atributos:**
+- `nome`: Nome completo do cliente
+- `numeroIdentificacao`: Número único de identificação do cliente
+- `motivoAtendimento`: Descrição do motivo do atendimento
 
-- **`Solicitacao.java`** - Representa uma solicitação no histórico:
-  - `id`, `descricao`, `dataHora`
-  - Construtor: `Solicitacao(String id, String descricao, String dataHora)`
+**Construtor:**
+- `Cliente(String nome, String numeroIdentificacao, String motivoAtendimento)`: Cria uma nova instância de cliente com todos os dados necessários
 
-- **`Node.java`** - Nó genérico para construir listas encadeadas
-- **`Fila.java`** - Implementação de fila (FIFO) para gerenciar clientes
-- **`Pilha.java`** - Implementação de pilha (LIFO) para histórico de solicitações
-- **`SistemaAtendimento.java`** - Classe principal com método `main` para demonstração
+### 2. Classe `Solicitacao`
 
-### Funcionalidades da Fila
+Representa uma solicitação de serviço no histórico.
 
-- `enfileirar()` - Adiciona cliente ao final da fila
-- `atender()` - Remove e retorna o próximo cliente
-- `verProximo()` - Mostra o próximo cliente sem remover
-- `exibirFila()` - Lista todos os clientes na fila
-- `estaVazia()` - Verifica se a fila está vazia
+**Atributos:**
+- `id`: Identificador único da solicitação
+- `descricao`: Descrição detalhada da solicitação
+- `dataHora`: Data e hora do registro da solicitação
 
-### Funcionalidades da Pilha
+**Construtor:**
+- `Solicitacao(String id, String descricao, String dataHora)`: Cria uma nova solicitação com dados completos
 
-- `empilhar()` - Adiciona solicitação ao topo
-- `desempilhar()` - Remove e retorna a solicitação do topo
-- `verTopo()` - Mostra a solicitação do topo sem remover
-- `exibirHistorico()` - Lista todo o histórico
-- `estaVazia()` - Verifica se a pilha está vazia
+### 3. Classe `Node`
 
-## Como Executar
+Nó genérico para implementação das estruturas de lista encadeada, podendo armazenar tanto `Cliente` quanto `Solicitacao`.
 
-1. Abra o projeto no IntelliJ IDEA
-2. Execute o arquivo `SistemaAtendimento.java`
-3. O programa demonstrará automaticamente:
-   - Criação de fila e pilha com 10 elementos cada
-   - Exibição do estado inicial
-   - Atendimento de 3 clientes
-   - Remoção de 3 solicitações do histórico
-   - Adição de novas entradas
-   - Exibição do estado final
+**Atributos:**
+- `solicitacao`: Referência para um objeto Solicitacao (usado na pilha)
+- `cliente`: Referência para um objeto Cliente (usado na fila)
+- `proximo`: Ponteiro para o próximo nó na lista encadeada
 
-## Objetivo Educacional
+**Construtores:**
+- `Node(Solicitacao solicitacao)`: Cria nó para pilha de solicitações
+- `Node(Cliente cliente)`: Cria nó para fila de clientes
 
-Este projeto tem como objetivo praticar conceitos fundamentais de programação:
-- Estruturas de dados lineares
-- Listas encadeadas
-- Manipulação de ponteiros
-- Encapsulamento e orientação a objetos
-- Desenvolvimento de algoritmos básicos
+### 4. Classe `Pilha`
 
-O código é totalmente didático e implementa manualmente estruturas que normalmente seriam fornecidas pela biblioteca padrão do Java.
+Implementa uma pilha (LIFO - Last In, First Out) usando lista encadeada para gerenciar o histórico de solicitações.
+
+**Atributos:**
+- `topo`: Referência para o nó no topo da pilha
+
+**Métodos:**
+
+#### `empilhar(Solicitacao solicitacao)`
+Adiciona uma nova solicitação ao topo da pilha.
+
+**Funcionamento:**
+1. Cria um novo nó com a solicitação
+2. Define o próximo do novo nó como o atual topo
+3. Atualiza o topo para o novo nó
+4. Exibe mensagem de confirmação
+
+#### `desempilhar()`
+Remove e retorna a solicitação do topo da pilha.
+
+**Funcionamento:**
+1. Verifica se a pilha não está vazia
+2. Armazena a solicitação do topo
+3. Atualiza o topo para o próximo nó
+4. Retorna a solicitação removida
+5. Se vazia, exibe mensagem e retorna null
+
+#### `estaVazia()`
+Verifica se a pilha está vazia.
+
+**Retorno:** `true` se topo for null, `false` caso contrário
+
+#### `verTopo()`
+Retorna a solicitação do topo sem removê-la.
+
+**Retorno:** Solicitação do topo ou null se vazia
+
+#### `exibirHistorico()`
+Exibe todas as solicitações da pilha em ordem do topo para a base.
+
+**Funcionamento:**
+1. Percorre a lista encadeada do topo até o final
+2. Exibe ID, descrição e data/hora de cada solicitação
+3. Numera as solicitações sequencialmente
+
+### 5. Classe `Fila`
+
+Implementa uma fila (FIFO - First In, First Out) usando lista encadeada para gerenciar a ordem de atendimento.
+
+**Atributos:**
+- `frente`: Referência para o primeiro nó da fila
+- `tras`: Referência para o último nó da fila
+
+**Métodos:**
+
+#### `enfileirar(Cliente cliente)`
+Adiciona um cliente ao final da fila.
+
+**Funcionamento:**
+1. Cria um novo nó com o cliente
+2. Se fila vazia, define frente e tras como o novo nó
+3. Se não vazia, adiciona ao final e atualiza tras
+4. Exibe mensagem de confirmação
+
+#### `atender()`
+Remove e retorna o cliente da frente da fila.
+
+**Funcionamento:**
+1. Verifica se a fila não está vazia
+2. Armazena o cliente da frente
+3. Atualiza a frente para o próximo nó
+4. Se frente ficar null, atualiza tras para null
+5. Retorna o cliente atendido
+6. Se vazia, exibe mensagem e retorna null
+
+#### `estaVazia()`
+Verifica se a fila está vazia.
+
+**Retorno:** `true` se frente for null, `false` caso contrário
+
+#### `verProximo()`
+Retorna o próximo cliente a ser atendido sem removê-lo.
+
+**Retorno:** Cliente da frente ou null se vazia
+
+#### `exibirFila()`
+Exibe todos os clientes na fila em ordem de atendimento.
+
+**Funcionamento:**
+1. Percorre a lista encadeada da frente até o final
+2. Exibe nome, ID e motivo de atendimento de cada cliente
+3. Mostra a posição de cada cliente na fila
+
+### 6. Classe `SistemaAtendimento`
+
+Classe principal que demonstra o funcionamento do sistema.
+
+**Funcionalidades Demonstradas:**
+
+#### Inicialização do Sistema
+- Cria instâncias da pilha (histórico) e fila (atendimento)
+- Popula o histórico com 10 solicitações de exemplo
+- Popula a fila com 10 clientes de exemplo
+
+#### Operações Realizadas:
+1. **Exibição do estado inicial**: Mostra histórico completo e fila de atendimento
+2. **Atendimento de 3 clientes**: Remove e exibe informações dos 3 primeiros clientes
+3. **Remoção de 3 solicitações**: Remove as 3 solicitações mais recentes do histórico
+4. **Adição de novas entradas**: Adiciona novo cliente à fila e nova solicitação ao histórico
+5. **Exibição do estado final**: Mostra o estado atualizado do sistema
+
+## Exemplo de Uso
+
+### Criando uma Solicitação:
+```java
+Solicitacao solic = new Solicitacao("REQ001", "Instalação de software", "2024-08-20 10:30");
+historicoSolicitacoes.empilhar(solic);
+```
+
+### Adicionando um Cliente:
+```java
+Cliente cliente = new Cliente("Maria Silva", "CLI001", "Dúvida sobre produto");
+filaAtendimento.enfileirar(cliente);
+```
+
+### Atendendo Clientes:
+```java
+Cliente atendido = filaAtendimento.atender();
+System.out.println("Atendido: " + atendido.nome);
+```
+
+### Consultando Histórico:
+```java
+historicoSolicitacoes.exibirHistorico();
+```
+
+## Vantagens da Implementação
+
+1. **Controle Total**: Implementação manual permite total controle sobre as operações
+2. **Eficiência**: Operações O(1) para inserção e remoção em ambas estruturas
+3. **Flexibilidade**: Fácil adaptação para diferentes tipos de dados
+4. **Transparência**: Código claro e compreensível sem dependências externas
+
+## Considerações Finais
+
+Este sistema demonstra eficientemente o uso de estruturas de dados fundamentais (pilha e fila) em um contexto prático de gerenciamento de atendimento. A implementação manual garante o cumprimento das restrições do projeto enquanto mantém a funcionalidade completa necessária para operação do sistema.
+
+## Autores
+
+- Ricardo Lucas Kucek (ricardo.kucek@pucpr.edu.br)
+- Renan da Silva Oliveira Andrade (renan.andrade@pucpr.edu.br)
